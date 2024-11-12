@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:23:27 by saragar2          #+#    #+#             */
-/*   Updated: 2024/11/12 19:23:28 by saragar2         ###   ########.fr       */
+/*   Updated: 2024/11/12 20:38:38 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	sum_one_to_shlvl(t_minishell *minishell)
 	shlvl = get_env_value("SHLVL", minishell);
 	if (shlvl == NULL)
 		return ;
-	shlvl_num = ft_atoi(shlvl) + 1;
+	shlvl_num = ft_atoi(shlvl, &(minishell->atoi_flag)) + 1;
 	shlvl_num_array = ft_itoa(shlvl_num);
 	set_env_value("SHLVL", shlvl_num_array, minishell);
 	free(shlvl_num_array);

@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:24:07 by saragar2          #+#    #+#             */
-/*   Updated: 2024/11/12 19:24:08 by saragar2         ###   ########.fr       */
+/*   Updated: 2024/11/12 20:24:08 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct s_minishell
 	struct s_token	**tokens;
 	char			**env;
 	int				size_of_env;
+
+	int				atoi_flag;
 
 	int				exit;
 	int				exit_status;
