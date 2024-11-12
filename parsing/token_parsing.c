@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_parsing.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:24:41 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:24:42 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	remove_redir_tokens(t_token **tokens)
 {
-	t_token *list;
+	t_token	*list;
 
 	list = *tokens;
 	while (list)
@@ -54,7 +66,10 @@ static int	check_quotes(char *str)
 	if (str[i] == '\"')
 	{
 		i++;
-		while (str[i] != '\"' && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
+		while (str[i] != '\"'
+			&& (str[i] == ' '
+				|| str[i] == '\t'
+				|| str[i] == '\n'))
 			i++;
 		if (str[i] == '\"')
 			return (1);
@@ -62,7 +77,10 @@ static int	check_quotes(char *str)
 	else if (str[i] == '\'')
 	{
 		i++;
-		while (str[i] != '\'' && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
+		while (str[i] != '\''
+			&& (str[i] == ' '
+				|| str[i] == '\t'
+				|| str[i] == '\n'))
 			i++;
 		if (str[i] == '\'')
 			return (1);
@@ -88,7 +106,7 @@ int	no_spaces_before_or_after_tokens(t_minishell *minishell, t_token **tokens)
 		{
 			if (check_quotes(list->str))
 				return (no_exit_free(list->str, NOT_CMD, minishell), 1);
-			list->str = ft_strtrim(str_cpy, " \t\n");
+			list->str = ft_strtrim(str_cpy, " \tn");
 			free(str_cpy);
 			list = list->next;
 		}
@@ -125,14 +143,5 @@ void	parse_tokens(t_minishell *minishell)
 		list = list->next;
 	}
 	if (no_spaces_before_or_after_tokens(minishell, minishell->tokens) == 0)
-	{
-	// t_token *token_list;
-	// token_list = *minishell->tokens;
-	// while (token_list)
-	// {
-	// 	printf("type: %d\ntoken: %s\nheredoc: %d, append: %d, infile: %d, outfile: %d, command: %d\n\n", token_list->type, token_list->str, token_list->heredoc, token_list->append, token_list->infile, token_list->outfile, token_list->cmd);
-	// 	token_list = token_list->next;
-	// }
 		init_execution(minishell);
-	}
 }

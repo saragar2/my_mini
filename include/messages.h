@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   messages.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:24:02 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:24:03 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MESSAGES_H
 # define MESSAGES_H
 
@@ -9,7 +21,7 @@
 # define QUOTES_ERR "Quotes not closed"
 # define PARSE_ERR "Error at input parsing"
 # define NOT_CMD ": command not found"
- 
+
 # define REDIR_HEREDOC 1
 # define REDIR_APPEND 2
 # define REDIR_INPUT 3

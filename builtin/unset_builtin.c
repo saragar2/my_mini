@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset_builtin.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:23:00 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:23:01 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 static void	unset_loop(int argc, char **argv, t_minishell *minishell)
@@ -11,7 +23,9 @@ static void	unset_loop(int argc, char **argv, t_minishell *minishell)
 	{
 		i = 0;
 		name = get_env_name(minishell->env[i]);
-		while (name && ft_strncmp(name, argv[loop_n], ft_strlen(argv[loop_n])) != 0 && minishell->env[i])
+		while (name
+			&& ft_strncmp(name, argv[loop_n], ft_strlen(argv[loop_n])) != 0
+			&& minishell->env[i])
 		{
 			free(name);
 			i++;

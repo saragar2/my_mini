@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit_builtin.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:22:51 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:22:52 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 static int	ft_is_num(char *str)
@@ -26,7 +38,7 @@ void	exit_builtin(int argc, char **argv, t_minishell *minishell)
 		return (minishell->exit_status = 0, ft_exit_no_error(EXIT, minishell));
 	else if (argc == 2 && ft_is_num(argv[1]) == 1)
 	{
-		minishell->exit_status = ft_atoi(argv[1]);
+		minishell->exit_status = ft_atoi(argv[1]); //integrar atoi en is_num??
 		return (ft_exit_no_error(EXIT, minishell));
 	}
 	else if (argc >= 2 && ft_is_num(argv[1]) == 0)

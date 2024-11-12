@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split_for_awk.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:24:54 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:24:55 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 static int	ft_words_for_awk(char *line)
@@ -9,14 +21,20 @@ static int	ft_words_for_awk(char *line)
 	words = 0;
 	while (line[i])
 	{
-		while (line[i] && (line[i] == ' ' || line[i] == '\n' || line[i] == '\t'))
+		while (line[i]
+			&& (line[i] == ' '
+				|| line[i] == '\n'
+				|| line[i] == '\t'))
 			i++;
 		if (!line[i])
 			return (words);
 		words++;
 		if (words == 2)
 			return (words);
-		while (line[i] && (line[i] != ' ' && line[i] != '\n' && line[i] != '\t'))
+		while (line[i]
+			&& line[i] != ' '
+			&& line[i] != '\n'
+			&& line[i] != '\t')
 			i++;
 	}
 	return (words);

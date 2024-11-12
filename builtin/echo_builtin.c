@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo_builtin.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:22:44 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:22:45 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	echo_builtin(int argc, char **argv, t_minishell *minishell)
@@ -8,7 +20,8 @@ void	echo_builtin(int argc, char **argv, t_minishell *minishell)
 	i = 1;
 	new_line = 1;
 	if (argc == 1)
-		return (ft_putchar_fd('\n', STDOUT_FILENO), minishell->exit_status = 0, (void)0);
+		return (ft_putchar_fd('\n', STDOUT_FILENO),
+			minishell->exit_status = 0, (void)0);
 	else if (argc == 2 && ft_strncmp(argv[1], "-n", ft_strlen("-n")) == 0)
 		return ;
 	if (ft_strncmp(argv[1], "-n", ft_strlen("-n")) == 0)

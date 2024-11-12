@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_env.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:23:29 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:23:30 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 char	*get_value(char *str)
@@ -34,7 +46,8 @@ char	**new_list_of_env(char **environ, t_minishell *minishell)
 		return (NULL);
 	while (i < minishell->size_of_env)
 	{
-		if (!(new_env[i] = ft_strdup(environ[i])))
+		new_env[i] = ft_strdup(environ[i]);
+		if (!new_env[i])
 		{
 			ft_free_double_array_until_length(new_env, i);
 			return (NULL);

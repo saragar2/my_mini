@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   join_tokens.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:25:06 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:25:07 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 static void	init_new_cmd(t_token *cmd)
@@ -49,8 +61,8 @@ void	ft_free_two_tokens(t_token *cmd1, t_token *cmd2)
 
 void	join_tokens(t_token *cmd1, t_token *cmd2, t_token **tokens)
 {
-	t_token *new_cmd;
-	t_token *list;
+	t_token	*new_cmd;
+	t_token	*list;
 
 	new_cmd = (t_token *)malloc(sizeof(t_token));
 	if (!new_cmd)

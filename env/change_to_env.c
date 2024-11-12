@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   change_to_env.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:23:24 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:26:49 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 char	*get_line_before_env(char *line, int len)
@@ -77,7 +89,8 @@ char	*get_line_after_env_change(char **substring, char *line, int i, int j)
 	i = 0;
 	if (!substring[0] && !substring[1] && !substring[2])
 		return (NULL);
-	line = (char *)malloc(sizeof(char) * (ft_strlen(substring[0]) + ft_strlen(substring[1]) + ft_strlen(substring[2]) + 1));
+	line = (char *)malloc(sizeof(char) * (ft_strlen(substring[0])
+				+ ft_strlen(substring[1]) + ft_strlen(substring[2]) + 1));
 	if (!line)
 		return (NULL);
 	while (k < 3)

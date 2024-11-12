@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   del_token.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:24:48 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:24:49 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	del_token(t_token *to_del, t_token **list)
 {
-	t_token *list_cpy;
+	t_token	*list_cpy;
 
 	list_cpy = *list;
 	if (list_cpy == to_del)
@@ -25,7 +37,7 @@ void	del_token(t_token *to_del, t_token **list)
 
 void	free_tokens(t_minishell *minishell)
 {
-	t_token *list;
+	t_token	*list;
 	t_token	*list_plus_one;
 
 	list = *minishell->tokens;

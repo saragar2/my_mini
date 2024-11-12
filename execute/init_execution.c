@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_execution.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:23:49 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:23:50 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	manage_fd(t_minishell *minishell, int i)
@@ -33,7 +45,10 @@ void	init_fork(t_minishell *minishell, int i)
 	signal(SIGINT, ctrl_c_command);
 	signal(SIGQUIT, ctrl_slash_command);
 	if (minishell->infile == -1 || minishell->outfile == -1)
-		return (minishell->exit_status = 1, minishell->exit = 1, minishell->wait_pid_status = 0, (void)0);
+		return (minishell->exit_status = 1,
+			minishell->exit = 1,
+			minishell->wait_pid_status = 0,
+			(void)0);
 	cmd = get_cmd_in_line(minishell->tokens, i, minishell->pipes);
 	if (!cmd)
 		return ;
@@ -59,7 +74,8 @@ void	create_forks(t_minishell *minishell)
 {
 	if (minishell->pipes >= 0)
 	{
-		minishell->pid = (pid_t *)malloc(sizeof(pid_t) * (minishell->pipes + 1));
+		minishell->pid = (pid_t *)malloc(sizeof(pid_t)
+				* (minishell->pipes + 1));
 		if (!minishell->pid)
 			return ;
 	}
@@ -83,22 +99,14 @@ void	init_execution(t_minishell *minishell)
 		if (i < minishell->pipes)
 			pipe_create(minishell, i);
 		minishell->outfile = get_outfile(minishell, minishell->outfile, i);
-		// printf("infile: %d\noutfile: %d\ni: %d\n", minishell->infile, minishell->outfile, i);
 		if (minishell->before_infile != 0)
-		{
-			// printf("close: %d\n", minishell->before_infile);
 			close(minishell->before_infile);
-		}
 		if (minishell->before_outfile != 1)
-		{
-			// printf("close: %d\n", minishell->before_outfile);
 			close(minishell->before_outfile);
-		}
 		init_fork(minishell, i);
 		if (minishell->exit == 1)
 			break ;
 		i++;
 	}
-	// printf("sexyyyy\n");
 	free_all(minishell, 0);
 }

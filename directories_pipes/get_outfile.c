@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_outfile.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:23:14 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:23:15 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 int	get_append_fd(t_token *list)
@@ -28,7 +40,7 @@ int	get_outfile_fd(t_token *list)
 
 int	get_outfile(t_minishell *minishell, int outfile_fd, int pipe_index)
 {
-	t_token *list;
+	t_token	*list;
 
 	list = *minishell->tokens;
 	while ((minishell->pipes) - pipe_index < minishell->pipes)

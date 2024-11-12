@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_builtin.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:22:54 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:22:55 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	change_env_value(char *name, char *value, t_minishell *minishell)
@@ -86,7 +98,8 @@ void	export_builtin(int argc, char **argv, t_minishell *minishell)
 		while (minishell->env[i])
 		{
 			env_name = get_env_name(minishell->env[i]);
-			printf("declare -x %s=\"%s\"\n", env_name, get_env_value(env_name, minishell));
+			printf("declare -x %s=\"%s\"\n", env_name,
+				get_env_value(env_name, minishell));
 			free(env_name);
 			i++;
 		}

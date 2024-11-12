@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_pipe.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:23:17 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:23:18 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	pipe_write_dup(t_minishell *minishell, int i)
@@ -44,8 +56,6 @@ void	pipe_create(t_minishell *minishell, int i)
 {
 	if (pipe(minishell->pipe_fd[i]) < 0)
 		return ;
-	// printf("pipe->read: %d: %d\n", i, minishell->pipe_fd[i][0]);
-	// printf("pipe->write: %d: %d\n", i, minishell->pipe_fd[i][1]);
 	minishell->outfile = minishell->pipe_fd[i][1];
 }
 

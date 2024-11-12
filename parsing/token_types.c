@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_types.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:24:44 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:24:45 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
-int		redirection_token(t_minishell *minishell, int i)
+int	redirection_token(t_minishell *minishell, int i)
 {
 	char	*line;
 	int		stay;
@@ -23,13 +35,13 @@ int		redirection_token(t_minishell *minishell, int i)
 	}
 }
 
-int		pipe_token(t_minishell *minishell, int i)
+int	pipe_token(t_minishell *minishell, int i)
 {
 	minishell->pipes++;
 	return (ft_create_token(minishell, PIPE, i + 1, i));
 }
 
-int		quote_token(t_minishell *minishell, int i)
+int	quote_token(t_minishell *minishell, int i)
 {
 	char	*line;
 	int		stay;
@@ -56,14 +68,18 @@ int		quote_token(t_minishell *minishell, int i)
 	}
 }
 
-int		text_token(t_minishell *minishell, int i)
+int	text_token(t_minishell *minishell, int i)
 {
 	char	*line;
 	int		stay;
 
 	stay = i;
 	line = minishell->user_input;
-	while (line[i] != '<' && line[i] != '>' && line[i] != '|' && line[i] != '\'' && line[i] != '"')
+	while (line[i] != '<'
+		&& line[i] != '>'
+		&& line[i] != '|'
+		&& line[i] != '\''
+		&& line[i] != '"')
 	{
 		if (!line[i])
 			break ;

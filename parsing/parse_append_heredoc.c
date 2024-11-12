@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_append_heredoc.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:24:32 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:24:33 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 static void	get_heredoc_token(t_token *list)
@@ -5,7 +17,7 @@ static void	get_heredoc_token(t_token *list)
 	char	*eof;
 	char	*after_eof;
 	t_token	*new;
-	t_token *next_token;
+	t_token	*next_token;
 
 	eof = get_first_word(list->next);
 	after_eof = get_after_first_word(list->next, eof);
@@ -29,7 +41,7 @@ static void	get_append_token(t_token *list)
 	char	*outfile;
 	char	*after_outfile;
 	t_token	*new;
-	t_token *next_token;
+	t_token	*next_token;
 
 	outfile = get_first_word(list->next);
 	after_outfile = get_after_first_word(list->next, outfile);
@@ -50,14 +62,18 @@ static void	get_append_token(t_token *list)
 
 void	parse_redir_append(t_minishell *minishell, t_token *list)
 {
-	if (!(list->next) || (list->next->type != TEXT && list->next->type != SINGLE_QUOTE && list->next->type != DOUBLE_QUOTE))
+	if (!(list->next)
+		|| (list->next->type != TEXT
+			&& list->next->type != SINGLE_QUOTE
+			&& list->next->type != DOUBLE_QUOTE))
 	{
 		minishell->error++;
 		return ;
 	}
 	else
 	{
-		if (list->next->type == SINGLE_QUOTE || list->next->type == DOUBLE_QUOTE)
+		if (list->next->type == SINGLE_QUOTE
+			|| list->next->type == DOUBLE_QUOTE)
 			list->next->append++;
 		else
 			get_append_token(list);
@@ -66,14 +82,18 @@ void	parse_redir_append(t_minishell *minishell, t_token *list)
 
 void	parse_redir_heredoc(t_minishell *minishell, t_token *list)
 {
-	if (!(list->next) || (list->next->type != TEXT && list->next->type != SINGLE_QUOTE && list->next->type != DOUBLE_QUOTE))
+	if (!(list->next)
+		|| (list->next->type != TEXT
+			&& list->next->type != SINGLE_QUOTE
+			&& list->next->type != DOUBLE_QUOTE))
 	{
 		minishell->error++;
 		return ;
 	}
 	else
 	{
-		if (list->next->type == SINGLE_QUOTE || list->next->type == DOUBLE_QUOTE)
+		if (list->next->type == SINGLE_QUOTE
+			|| list->next->type == DOUBLE_QUOTE)
 			list->next->heredoc++;
 		else
 			get_heredoc_token(list);

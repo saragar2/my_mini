@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_infile.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:23:11 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:23:12 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 char	*get_heredoc_line(char *eof)
@@ -56,7 +68,7 @@ int	get_infile_fd(t_token *list)
 
 int	get_infile(t_minishell *minishell, int infile_fd, int pipe_index)
 {
-	t_token *list;
+	t_token	*list;
 
 	list = *minishell->tokens;
 	while ((minishell->pipes) - pipe_index < minishell->pipes)

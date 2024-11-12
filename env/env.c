@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:23:27 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:23:28 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	unset_env(char *str, t_minishell *minishell)
@@ -58,7 +70,8 @@ void	set_env_value(char *str, char *value, t_minishell *minishell)
 	char	*str_cpy;
 
 	i = 0;
-	while (minishell->env[i] && ft_strncmp(minishell->env[i], str, ft_strlen(str)))
+	while (minishell->env[i]
+		&& ft_strncmp(minishell->env[i], str, ft_strlen(str)))
 		i++;
 	if (minishell->env[i] == NULL)
 		return ;

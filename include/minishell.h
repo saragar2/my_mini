@@ -1,4 +1,16 @@
-#ifndef	MINISHELL_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:24:07 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:24:08 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include "../libft/libft.h"
@@ -13,7 +25,7 @@ typedef struct s_token
 {
 	int				type;
 	char			*str;
-	
+
 	int				infile;
 	int				outfile;
 	int				heredoc;
@@ -45,8 +57,6 @@ typedef struct s_minishell
 	int				**pipe_fd;
 	pid_t			*pid;
 }	t_minishell;
-
-
 
 // DIRECTORIES_PIPES FUNCTIONS //
 
@@ -88,7 +98,6 @@ void	unset_builtin(int argc, char **argv, t_minishell *minishell);
 void	exit_builtin(int argc, char **argv, t_minishell *minishell);
 void	env_builtin(int argc, char **argv, t_minishell *minishell);
 
-
 // EXECUTE FUNCTIONS //
 
 void	init_execution(t_minishell *minishell);
@@ -111,7 +120,8 @@ char	*init_input(t_minishell *minishell);
 // PARSING FUNCTIONS //
 
 void	input_to_tokens(t_minishell *minishell);
-int		ft_create_token(t_minishell *minishell, int type, int index, int init_of_str);
+int		ft_create_token(t_minishell *minishell, \
+int type, int index, int init_of_str);
 
 int		redirection_token(t_minishell *minishell, int i);
 int		pipe_token(t_minishell *minishell, int i);
@@ -156,6 +166,5 @@ void	ft_exit_error(char *str, t_minishell *minishell);
 void	ft_exit_no_error(char *str, t_minishell *minishell);
 void	free_all(t_minishell *minishell, int is_exit);
 void	no_exit_free(char *str1, char *str2, t_minishell *minishell);
-
 
 #endif

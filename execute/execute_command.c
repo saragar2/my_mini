@@ -1,22 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_command.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 19:23:35 by saragar2          #+#    #+#             */
+/*   Updated: 2024/11/12 19:23:36 by saragar2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 int	builtin_check(char **argv)
 {
-	if (ft_strncmp(argv[0], ECHO, ft_strlen(ECHO)) &&
-		ft_strncmp(argv[0], PWD, ft_strlen(PWD)) &&
-		ft_strncmp(argv[0], CD, ft_strlen(CD)) &&
-		ft_strncmp(argv[0], EXPORT, ft_strlen(EXPORT)) &&
-		ft_strncmp(argv[0], UNSET, ft_strlen(UNSET)) &&
-		ft_strncmp(argv[0], EXIT, ft_strlen(EXIT)) &&
-		ft_strncmp(argv[0], ENV, ft_strlen(ENV)))
+	if (ft_strncmp(argv[0], ECHO, ft_strlen(ECHO))
+		&& ft_strncmp(argv[0], PWD, ft_strlen(PWD))
+		&& ft_strncmp(argv[0], CD, ft_strlen(CD))
+		&& ft_strncmp(argv[0], EXPORT, ft_strlen(EXPORT))
+		&& ft_strncmp(argv[0], UNSET, ft_strlen(UNSET))
+		&& ft_strncmp(argv[0], EXIT, ft_strlen(EXIT))
+		&& ft_strncmp(argv[0], ENV, ft_strlen(ENV)))
 		return (0);
-	else	
+	else
 		return (1);
 }
 
 char	*get_cmd_in_line(t_token **tokens, int i, int total_pipes)
 {
-	t_token *list;
+	t_token	*list;
 
 	list = *tokens;
 	while ((total_pipes) - i < total_pipes)
@@ -116,6 +128,4 @@ void	ft_execute_command(t_minishell *minishell, int i, int total_pipes)
 	}
 	else
 		cmd_execve(cmd_argv, minishell);
-	// close(minishell->infile);
-	// close(minishell->outfile);
 }
