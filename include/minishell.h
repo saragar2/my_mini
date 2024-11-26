@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:24:07 by saragar2          #+#    #+#             */
-/*   Updated: 2024/11/12 20:24:08 by saragar2         ###   ########.fr       */
+/*   Updated: 2024/11/26 19:33:22 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	change_env_value(char *name, char *value, t_minishell *minishell);
 
 void	set_env_value(char *str, char *value, t_minishell *minishell);
 char	*get_env_value(char *str, t_minishell *minishell);
+void	new_minishell_env(t_minishell *minishell, char **argv, int argc);
 char	**add_env(char *str, t_minishell *minishell);
 void	unset_env(char *str, t_minishell *minishell);
 void	get_list_of_env(char **environ, t_minishell *minishell);
@@ -160,6 +161,7 @@ char	**ft_split_minishell(char *str);
 char	**ft_split_for_awk(char *line);
 char	*ft_strtrim_with_free(char *str, char *trim);
 char	*get_comb_of_argv(int argc, char **argv);
+int		check_num(char *s);
 
 // FREE FUNCTIONS //
 

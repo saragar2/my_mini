@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:22:54 by saragar2          #+#    #+#             */
-/*   Updated: 2024/11/12 19:22:55 by saragar2         ###   ########.fr       */
+/*   Updated: 2024/11/26 19:53:17 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*get_env_name(char *str)
 	return (name);
 }
 
-static void	new_minishell_env(t_minishell *minishell, char **argv, int argc)
+void	new_minishell_env(t_minishell *minishell, char **argv, int argc)
 {
 	char	*new_str;
 	char	*old_str1;
@@ -79,7 +79,7 @@ static void	new_minishell_env(t_minishell *minishell, char **argv, int argc)
 		new_str = ft_strjoin(old_str1, combination_of_argv);
 		free(combination_of_argv);
 	}
-	else
+	else //------------------------------------esto es necesario?
 	{
 		free(old_str1);
 		new_str = ft_strdup(argv[1]);
@@ -92,6 +92,7 @@ void	export_builtin(int argc, char **argv, t_minishell *minishell)
 	int		i;
 	char	*env_name;
 
+	// printf("\n\nmira como molo: %d\n-----------------\n", argc);
 	i = 0;
 	if (argc == 1)
 	{
@@ -104,11 +105,19 @@ void	export_builtin(int argc, char **argv, t_minishell *minishell)
 			i++;
 		}
 	}
-	else
+
+	//-----------------------todo esto está mal planteado porque soy tonta y solo sirve para el primer argv
+	
+	else if (check_num(argv[1]) == 0)
 	{
 		if (has_equal_sign(argv[1]) == 0)
 			return ;
 		new_minishell_env(minishell, argv, argc);
+	}
+	else if (check_num(argv[1]) == 1)
+	{
+		ft_putendl_fd("export: not a valid identifier", STDERR_FILENO);
+		return (minishell->exit_status = 1, (void)0);
 	}
 	minishell->exit_status = 0;
 	minishell->wait_pid_status = 0;

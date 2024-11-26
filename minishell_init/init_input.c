@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:24:18 by saragar2          #+#    #+#             */
-/*   Updated: 2024/11/12 19:24:19 by saragar2         ###   ########.fr       */
+/*   Updated: 2024/11/26 19:52:42 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ char	*init_input(t_minishell *minishell)
 
 	minishell->exit = 0;
 	minishell->wait_pid_status = 1;
-	if (get_env_value("PS1", minishell) == NULL)
-		set_env_value("PS1", "$ ", minishell);
-	input = readline(get_env_value("PS1", minishell));
+	input = readline("Minishell$ ");
 	if (input == NULL)
 		minishell->exit_status = 0;
 	if (input != NULL && input[0] != '\0')
