@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:22:54 by saragar2          #+#    #+#             */
-/*   Updated: 2024/11/26 19:53:17 by saragar2         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:43:30 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	export_builtin(int argc, char **argv, t_minishell *minishell)
 
 	//-----------------------todo esto está mal planteado porque soy tonta y solo sirve para el primer argv
 	
-	else if (check_num(argv[1]) == 0)
+	else if (check_num(argv[1]) == 0 || ft_strncmp("PS1", argv[1], 3) == 0)
 	{
 		if (has_equal_sign(argv[1]) == 0)
 			return ;
