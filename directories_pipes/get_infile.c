@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:23:11 by saragar2          #+#    #+#             */
-/*   Updated: 2024/11/12 19:23:12 by saragar2         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:02:56 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*get_heredoc_line(char *eof)
 	char	*line;
 	char	*line_to_get;
 
-	signal(SIGINT, ctlc_heredoc);
+	signal(SIGINT, ctlc_heredoc); //-----seguramente es aqui donde está el segfault heredoc
 	line = ft_strdup("");
 	while (1)
 	{

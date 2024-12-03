@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:24:28 by saragar2          #+#    #+#             */
-/*   Updated: 2024/11/12 19:24:29 by saragar2         ###   ########.fr       */
+/*   Updated: 2024/12/03 19:47:19 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	input_to_tokens(t_minishell *minishell)
 		if (minishell->user_input[i] == '\0')
 			return ;
 		if (minishell->user_input[i] == '<' || minishell->user_input[i] == '>')
-			i = redirection_token(minishell, i);
+			i = redirection_token(minishell, i); //---------------para que se iguala con i?? se vuelve a usar??
 		else if (minishell->user_input[i] == '|')
 			i = pipe_token(minishell, i);
 		else if (minishell->user_input[i] == '\''
