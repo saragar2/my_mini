@@ -12,29 +12,104 @@
 
 #include "../include/minishell.h"
 
-char	*get_heredoc_line(char *eof)
+char *get_heredoc_line(char *eof)
 {
-	char	*line;
-	char	*line_to_get;
+    int pipe_fd[2];
+    pid_t pid;
+    char *line = NULL;
+    char buffer[1024];
+    ssize_t bytes_read;
 
-	signal(SIGINT, ctlc_heredoc); //-----seguramente es aqui donde está el segfault heredoc
-	line = ft_strdup("");
-	while (1)
-	{
-		line_to_get = get_next_line(STDIN_FILENO);
-		if (ft_strncmp(line_to_get, eof, ft_strlen(eof)) != 0)
-		{
-			line = ft_strjoin(line, line_to_get);
-			free(line_to_get);
-		}
-		else
-		{
-			free(line_to_get);
-			break ;
-		}
-	}
-	return (line);
+    if (pipe(pipe_fd) == -1)
+    {
+        perror("pipe");
+        return NULL;
+    }
+
+    pid = fork();
+    if (pid == -1)
+    {
+        perror("fork");
+        return NULL;
+    }
+
+    if (pid == 0) // Proceso hijo.
+    {
+        char *line_to_get;
+
+        signal(SIGINT, ctlc_heredoc); // Configura manejador de SIGINT.
+        close(pipe_fd[0]);           // Cierra la lectura del pipe.
+
+        while (1)
+        {
+            line_to_get = get_next_line(STDIN_FILENO);
+
+            // Si `get_next_line` retorna NULL (EOF o error).
+            if (!line_to_get)
+            {
+                close(pipe_fd[1]); // Cerramos el pipe antes de salir.
+                exit(1);
+            }
+
+            // Comparamos con el delimitador `eof`.
+            if (ft_strncmp(line_to_get, eof, ft_strlen(eof)) != 0 || (ft_strlen(line_to_get) - 1) != ft_strlen(eof))
+            {
+                write(pipe_fd[1], line_to_get, ft_strlen(line_to_get));
+                write(pipe_fd[1], "\n", 1); // Añadir salto de línea.
+                free(line_to_get);          // Liberamos la memoria correctamente.
+            }
+            else
+            {
+                free(line_to_get); // Liberamos incluso si es `eof`.
+                break;
+            }
+        }
+
+        close(pipe_fd[1]); // Cerramos la escritura del pipe.
+        exit(0);           // Terminamos el proceso hijo.
+    }
+    else // Proceso padre.
+    {
+        int status;
+
+        close(pipe_fd[1]); // Cierra la escritura del pipe en el padre.
+
+        line = ft_strdup(""); // Inicializamos `line`.
+
+        // Leemos del pipe.
+        while ((bytes_read = read(pipe_fd[0], buffer, sizeof(buffer) - 1)) > 0)
+        {
+            buffer[bytes_read] = '\0'; // Aseguramos que el buffer sea una cadena válida.
+            char *temp = line;
+            line = ft_safe_strjoin(line, buffer); // Usamos una función segura para concatenar.
+            free(temp);                           // Liberamos la memoria previa solo si `line` no falla.
+
+            if (!line)
+            {
+                // Si `ft_safe_strjoin` falla, liberamos el pipe y retornamos NULL.
+                close(pipe_fd[0]);
+                return NULL;
+            }
+        }
+
+        close(pipe_fd[0]); // Cerramos la lectura del pipe.
+
+        // Esperamos al hijo y verificamos si fue interrumpido.
+        waitpid(pid, &status, 0);
+        if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+        {
+            free(line); // Liberamos si se interrumpió por Ctrl+C.
+            return NULL;
+        }
+    }
+
+    return line;
 }
+
+
+
+
+
 
 int	get_heredoc_fd(t_token *list)
 {
