@@ -6,104 +6,68 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:23:11 by saragar2          #+#    #+#             */
-/*   Updated: 2024/12/03 20:02:56 by saragar2         ###   ########.fr       */
+/*   Updated: 2024/12/17 19:12:17 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char *get_heredoc_line(char *eof)
+char	*get_heredoc_line(char *eof)
 {
-    int pipe_fd[2];
-    pid_t pid;
-    char *line = NULL;
-    char buffer[1024];
-    ssize_t bytes_read;
-
-    if (pipe(pipe_fd) == -1)
-    {
-        perror("pipe");
-        return NULL;
-    }
-
-    pid = fork();
-    if (pid == -1)
-    {
-        perror("fork");
-        return NULL;
-    }
-
-    if (pid == 0) // Proceso hijo.
-    {
-        char *line_to_get;
-
-        signal(SIGINT, ctlc_heredoc); // Configura manejador de SIGINT.
-        close(pipe_fd[0]);           // Cierra la lectura del pipe.
-
-        while (1)
-        {
-            line_to_get = get_next_line(STDIN_FILENO);
-
-            // Si `get_next_line` retorna NULL (EOF o error).
-            if (!line_to_get)
-            {
-                close(pipe_fd[1]); // Cerramos el pipe antes de salir.
-                exit(1);
-            }
-
-            // Comparamos con el delimitador `eof`.
-            if (ft_strncmp(line_to_get, eof, ft_strlen(eof)) != 0 || (ft_strlen(line_to_get) - 1) != ft_strlen(eof))
-            {
-                write(pipe_fd[1], line_to_get, ft_strlen(line_to_get));
-                write(pipe_fd[1], "\n", 1); // Añadir salto de línea.
-                free(line_to_get);          // Liberamos la memoria correctamente.
-            }
-            else
-            {
-                free(line_to_get); // Liberamos incluso si es `eof`.
-                break;
-            }
-        }
-
-        close(pipe_fd[1]); // Cerramos la escritura del pipe.
-        exit(0);           // Terminamos el proceso hijo.
-    }
-    else // Proceso padre.
-    {
-        int status;
-
-        close(pipe_fd[1]); // Cierra la escritura del pipe en el padre.
-
-        line = ft_strdup(""); // Inicializamos `line`.
-
-        // Leemos del pipe.
-        while ((bytes_read = read(pipe_fd[0], buffer, sizeof(buffer) - 1)) > 0)
-        {
-            buffer[bytes_read] = '\0'; // Aseguramos que el buffer sea una cadena válida.
-            char *temp = line;
-            line = ft_safe_strjoin(line, buffer); // Usamos una función segura para concatenar.
-            free(temp);                           // Liberamos la memoria previa solo si `line` no falla.
-
-            if (!line)
-            {
-                // Si `ft_safe_strjoin` falla, liberamos el pipe y retornamos NULL.
-                close(pipe_fd[0]);
-                return NULL;
-            }
-        }
-
-        close(pipe_fd[0]); // Cerramos la lectura del pipe.
-
-        // Esperamos al hijo y verificamos si fue interrumpido.
-        waitpid(pid, &status, 0);
-        if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-        {
-            free(line); // Liberamos si se interrumpió por Ctrl+C.
-            return NULL;
-        }
-    }
-
-    return line;
+	t_heredoc	g;
+	
+	g.line = NULL;
+	g.temp = g.line; //esto no va aqui, averigua tú donde era
+	if (pipe(g.pipe_fd) == -1)
+		return (perror("pipe"), NULL);
+	g.pid = fork();
+	if (g.pid == -1)
+		return (perror("fork"), NULL);
+	if (g.pid == 0) // Proceso hijo.
+	{
+		signal(SIGINT, ctlc_heredoc); // Configura manejador de SIGINT.
+		close(g.pipe_fd[0]);           // Cierra la lectura del pipe.
+		while (1)
+		{
+			g.line_to_get = get_next_line(STDIN_FILENO);
+			if (!g.line_to_get)
+			{
+				close(g.pipe_fd[1]); // Cerramos el pipe antes de salir.
+				exit(1);
+			}
+			if (ft_strncmp(g.line_to_get, eof, ft_strlen(eof)) != 0 || (ft_strlen(g.line_to_get) - 1) != ft_strlen(eof))
+			{
+				write(g.pipe_fd[1], g.line_to_get, ft_strlen(g.line_to_get));
+				write(g.pipe_fd[1], "\n", 1); // Añadir salto de línea.
+				free(g.line_to_get);          // Liberamos la memoria correctamente.
+			}
+			else
+			{
+				free(g.line_to_get); // Liberamos incluso si es `eof`.
+				break;
+			}
+		}
+		close(g.pipe_fd[1]); // Cerramos la escritura del pipe.
+		exit(0);           // Terminamos el proceso hijo.
+	}
+	else // Proceso padre.
+	{
+		close(g.pipe_fd[1]); // Cierra la escritura del pipe en el padre.
+		g.line = ft_strdup(""); // Inicializamos `line`.
+		while ((g.bytes_read = read(g.pipe_fd[0], g.buffer, sizeof(g.buffer) - 1)) > 0)
+		{
+			g.buffer[g.bytes_read] = '\0'; // Aseguramos que el buffer sea una cadena válida.
+			g.line = ft_safe_strjoin(g.line, g.buffer); // Usamos una función segura para concatenar.
+			free(g.temp);                           // Liberamos la memoria previa solo si `line` no falla.
+			if (!g.line)
+				return (close(g.pipe_fd[0]), NULL);
+		}
+		close(g.pipe_fd[0]); // Cerramos la lectura del pipe.
+		waitpid(g.pid, &g.status, 0);
+		if (WIFSIGNALED(g.status) && WTERMSIG(g.status) == SIGINT)
+			return (free(g.line), NULL);
+	}
+	return (g.line);
 }
 
 

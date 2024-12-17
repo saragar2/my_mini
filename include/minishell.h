@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:24:07 by saragar2          #+#    #+#             */
-/*   Updated: 2024/11/26 19:33:22 by saragar2         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:13:11 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,17 @@ typedef struct s_minishell
 	pid_t			*pid;
 }	t_minishell;
 
+typedef struct s_heredoc
+{
+	int		pipe_fd[2];
+	pid_t	pid;
+	char	*line;
+	char	buffer[1024];
+	ssize_t bytes_read;
+	int		status;
+	char	*line_to_get;
+	char 	*temp;
+}	t_heredoc;
 // DIRECTORIES_PIPES FUNCTIONS //
 
 int		get_infile(t_minishell *minishell, int infile_fd, int pipe_index);
