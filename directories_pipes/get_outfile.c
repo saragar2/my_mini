@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:23:14 by saragar2          #+#    #+#             */
-/*   Updated: 2024/11/12 19:23:15 by saragar2         ###   ########.fr       */
+/*   Updated: 2025/01/15 19:29:45 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,8 @@ int	get_outfile(t_minishell *minishell, int outfile_fd, int pipe_index)
 	}
 	while (list && list->type != PIPE)
 	{
-		if (list->outfile == 1 || list->append == 1)
-		{
-			if (outfile_fd != 1)
-				close(outfile_fd);
-		}
+		if ((list->outfile == 1 || list->append == 1) && outfile_fd != 1)
+			close(outfile_fd);
 		if (list->outfile == 1)
 			outfile_fd = get_outfile_fd(list);
 		else if (list->append == 1)

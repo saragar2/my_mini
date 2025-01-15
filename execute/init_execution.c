@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:23:49 by saragar2          #+#    #+#             */
-/*   Updated: 2024/11/12 19:23:50 by saragar2         ###   ########.fr       */
+/*   Updated: 2025/01/15 20:18:42 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,34 +40,29 @@ void	ft_set_next_fd(t_minishell *minishell, int i)
 void	init_fork(t_minishell *minishell, int i)
 {
 	char	*cmd;
-	char	**cmd_argv;
+	char	**c_a;
 
 	signal(SIGINT, ctrl_c_command);
 	signal(SIGQUIT, ctrl_slash_command);
 	if (minishell->infile == -1 || minishell->outfile == -1)
-		return (minishell->exit_status = 1,
-			minishell->exit = 1,
-			minishell->wait_pid_status = 0,
-			(void)0);
+		return (minishell->exit_status = 1, minishell->exit = 1,
+			minishell->wait_pid_status = 0, (void)0);
 	cmd = get_cmd_in_line(minishell->tokens, i, minishell->pipes);
 	if (!cmd)
 		return ;
-	cmd_argv = ft_split_minishell(cmd);
-	if (ft_strncmp(cmd_argv[0], "exit", ft_strlen("exit")) == 0
-		|| ft_strncmp(cmd_argv[0], "export", ft_strlen("export")) == 0
-		|| ft_strncmp(cmd_argv[0], "unset", ft_strlen("unset")) == 0
-		|| ft_strncmp(cmd_argv[0], "cd", ft_strlen("cd")) == 0)
-		builtin_execute(minishell, cmd_argv);
+	c_a = ft_split_minishell(cmd);
+	if (ft_strncmp(c_a[0], "exit", ft_strlen("exit")) == 0
+		|| ft_strncmp(c_a[0], "export", ft_strlen("export")) == 0
+		|| ft_strncmp(c_a[0], "unset", ft_strlen("unset")) == 0
+		|| ft_strncmp(c_a[0], "cd", ft_strlen("cd")) == 0)
+		builtin_execute(minishell, c_a);
 	else
 	{
-		minishell->pid[i] = fork();
-		if (minishell->pid[i] < 0)
+		if (ft_auxiliar_pid(minishell, i) == -1)
 			return ;
-		if (minishell->pid[i] == 0)
-			ft_execute_command(minishell, i, minishell->pipes);
 	}
 	ft_set_next_fd(minishell, i);
-	ft_free_double_array(cmd_argv);
+	ft_free_double_array(c_a);
 }
 
 void	create_forks(t_minishell *minishell)

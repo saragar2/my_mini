@@ -31,7 +31,7 @@ SRCS_PARSING = input_to_tokens.c token_types.c token_parsing.c parse_basic_redir
 PARSING = $(addprefix $(DIR_PARSING), $(SRCS_PARSING))
 
 DIR_EXECUTE = execute/
-SRCS_EXECUTE = init_execution.c execute_command.c
+SRCS_EXECUTE = init_execution.c execute_command.c execute_aux.c
 EXECUTE = $(addprefix $(DIR_EXECUTE), $(SRCS_EXECUTE))
 
 DIR_DIRECTORIES_PIPES = directories_pipes/

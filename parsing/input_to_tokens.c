@@ -6,13 +6,13 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:24:28 by saragar2          #+#    #+#             */
-/*   Updated: 2024/12/03 19:47:19 by saragar2         ###   ########.fr       */
+/*   Updated: 2025/01/15 19:50:21 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_create_token(t_minishell *minishell, int type, int index, int init_of_str)
+int	ft_create_token(t_minishell *minishell, int type, int index, int init_str)
 {
 	char	*str;
 	t_token	*new_node;
@@ -20,10 +20,10 @@ int	ft_create_token(t_minishell *minishell, int type, int index, int init_of_str
 	int		j;
 
 	j = 0;
-	i = init_of_str;
+	i = init_str;
 	if (!(minishell->tokens))
 		minishell->tokens = ft_create_double_list();
-	str = (char *)malloc(sizeof(char) * (index - init_of_str + 1));
+	str = (char *)malloc(sizeof(char) * (index - init_str + 1));
 	if (!str)
 		return (-1);
 	while (i < index)
@@ -95,32 +95,31 @@ char	*change_to_env_value(char	*line, t_minishell *minishell)
 	return (line);
 }
 
-void	input_to_tokens(t_minishell *minishell)
+void	input_to_tokens(t_minishell *mini)
 {
 	int	i;
 
 	i = 0;
 	signal(SIGINT, SIG_IGN);
-	minishell->user_input = \
-	change_to_env_value(minishell->user_input, minishell);
-	while (minishell->user_input[i])
+	mini->user_input = change_to_env_value(mini->user_input, mini);
+	while (mini->user_input[i])
 	{
-		while ((minishell->user_input[i] == ' '
-				|| minishell->user_input[i] == '\t'
-				|| minishell->user_input[i] == '\n')
-			&& minishell->user_input[i])
+		while ((mini->user_input[i] == ' '
+				|| mini->user_input[i] == '\t'
+				|| mini->user_input[i] == '\n')
+			&& mini->user_input[i])
 			i++;
-		if (minishell->user_input[i] == '\0')
+		if (mini->user_input[i] == '\0')
 			return ;
-		if (minishell->user_input[i] == '<' || minishell->user_input[i] == '>')
-			i = redirection_token(minishell, i); //---------------para que se iguala con i?? se vuelve a usar??
-		else if (minishell->user_input[i] == '|')
-			i = pipe_token(minishell, i);
-		else if (minishell->user_input[i] == '\''
-			|| minishell->user_input[i] == '"')
-			i = quote_token(minishell, i);
+		if (mini->user_input[i] == '<' || mini->user_input[i] == '>')
+			i = redirection_token(mini, i);
+		else if (mini->user_input[i] == '|')
+			i = pipe_token(mini, i);
+		else if (mini->user_input[i] == '\''
+			|| mini->user_input[i] == '"')
+			i = quote_token(mini, i);
 		else
-			i = text_token(minishell, i);
+			i = text_token(mini, i);
 	}
-	parse_tokens(minishell);
+	parse_tokens(mini);
 }

@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:24:41 by saragar2          #+#    #+#             */
-/*   Updated: 2024/11/12 19:24:42 by saragar2         ###   ########.fr       */
+/*   Updated: 2025/01/15 19:42:17 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,15 @@ static int	check_quotes(char *str)
 	if (str[i] == '\"')
 	{
 		i++;
-		while (str[i] != '\"'
-			&& (str[i] == ' '
-				|| str[i] == '\t'
+		while (str[i] != '\"' && (str[i] == ' ' || str[i] == '\t'
 				|| str[i] == '\n'))
 			i++;
 		if (str[i] == '\"')
 			return (1);
 	}
-	else if (str[i] == '\'')
+	else if (str[i++] == '\'')
 	{
-		i++;
-		while (str[i] != '\''
-			&& (str[i] == ' '
-				|| str[i] == '\t'
+		while (str[i] != '\'' && (str[i] == ' ' || str[i] == '\t'
 				|| str[i] == '\n'))
 			i++;
 		if (str[i] == '\'')

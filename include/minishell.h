@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:24:07 by saragar2          #+#    #+#             */
-/*   Updated: 2024/12/17 18:13:11 by saragar2         ###   ########.fr       */
+/*   Updated: 2025/01/15 20:19:20 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ typedef struct s_heredoc
 	pid_t	pid;
 	char	*line;
 	char	buffer[1024];
-	ssize_t bytes_read;
+	ssize_t	bytes_read;
 	int		status;
 	char	*line_to_get;
-	char 	*temp;
+	char	*temp;
 }	t_heredoc;
 // DIRECTORIES_PIPES FUNCTIONS //
 
@@ -118,6 +118,7 @@ void	init_execution(t_minishell *minishell);
 int		builtin_check(char **argv);
 char	*get_cmd_in_line(t_token **tokens, int i, int total_pipes);
 void	ft_execute_command(t_minishell *minishell, int i, int total_pipes);
+int		ft_auxiliar_pid(t_minishell *minishell, int i);
 
 // SIGNALS FUNCTIONS //
 

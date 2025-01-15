@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:23:11 by saragar2          #+#    #+#             */
-/*   Updated: 2024/12/17 19:12:17 by saragar2         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:11:14 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*get_heredoc_line(char *eof)
 	t_heredoc	g;
 	
 	g.line = NULL;
-	g.temp = g.line; //esto no va aqui, averigua tú donde era
 	if (pipe(g.pipe_fd) == -1)
 		return (perror("pipe"), NULL);
 	g.pid = fork();
@@ -57,6 +56,7 @@ char	*get_heredoc_line(char *eof)
 		while ((g.bytes_read = read(g.pipe_fd[0], g.buffer, sizeof(g.buffer) - 1)) > 0)
 		{
 			g.buffer[g.bytes_read] = '\0'; // Aseguramos que el buffer sea una cadena válida.
+			g.temp = g.line;
 			g.line = ft_safe_strjoin(g.line, g.buffer); // Usamos una función segura para concatenar.
 			free(g.temp);                           // Liberamos la memoria previa solo si `line` no falla.
 			if (!g.line)
@@ -69,11 +69,6 @@ char	*get_heredoc_line(char *eof)
 	}
 	return (g.line);
 }
-
-
-
-
-
 
 int	get_heredoc_fd(t_token *list)
 {
