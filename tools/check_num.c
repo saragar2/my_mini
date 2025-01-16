@@ -14,8 +14,7 @@
 
 int	check_num(char *s)
 {
-	
-	while(*s && *s != '=')
+	while (*s && *s != '=')
 	{
 		if (*s >= '0' && *s <= '9')
 			return (1);
