@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:23:11 by saragar2          #+#    #+#             */
-/*   Updated: 2024/12/18 15:11:14 by saragar2         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:12:12 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*get_heredoc_line(char *eof)
 {
 	t_heredoc	g;
-	
+
 	g.line = NULL;
 	if (pipe(g.pipe_fd) == -1)
 		return (perror("pipe"), NULL);
@@ -76,11 +76,8 @@ int	get_infile(t_minishell *minishell, int infile_fd, int pipe_index)
 	}
 	while (list && list->type != PIPE)
 	{
-		if (list->infile == 1 || list->heredoc == 1)
-		{
-			if (infile_fd != 0)
-				close(infile_fd);
-		}
+		if ((list->infile == 1 || list->heredoc == 1) && (infile_fd != 0))
+			close(infile_fd);
 		if (list->infile == 1)
 			infile_fd = get_infile_fd(list);
 		else if (list->heredoc == 1)

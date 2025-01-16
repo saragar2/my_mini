@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:22:54 by saragar2          #+#    #+#             */
-/*   Updated: 2024/11/27 18:43:30 by saragar2         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:07:24 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ void	export_builtin(int argc, char **argv, t_minishell *minishell)
 		new_minishell_env(minishell, argv, argc);
 	}
 	else if (check_num(argv[1]) == 1)
-		return (ft_putendl_fd("export: not a valid identifier", 
-		STDERR_FILENO), minishell->exit_status = 1, (void)0);
+		return (ft_putendl_fd("export: not a valid identifier",
+				STDERR_FILENO), minishell->exit_status = 1, (void)0);
 	minishell->exit_status = 0;
 	minishell->wait_pid_status = 0;
 }
