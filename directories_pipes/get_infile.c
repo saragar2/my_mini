@@ -22,50 +22,12 @@ char	*get_heredoc_line(char *eof)
 	g.pid = fork();
 	if (g.pid == -1)
 		return (perror("fork"), NULL);
-	if (g.pid == 0) // Proceso hijo.
+	if (g.pid == 0)
+		help_son_process(&g, eof);
+	else
 	{
-		signal(SIGINT, ctlc_heredoc); // Configura manejador de SIGINT.
-		close(g.pipe_fd[0]);           // Cierra la lectura del pipe.
-		while (1)
-		{
-			g.line_to_get = get_next_line(STDIN_FILENO);
-			if (!g.line_to_get)
-			{
-				close(g.pipe_fd[1]); // Cerramos el pipe antes de salir.
-				exit(1);
-			}
-			if (ft_strncmp(g.line_to_get, eof, ft_strlen(eof)) != 0 || (ft_strlen(g.line_to_get) - 1) != ft_strlen(eof))
-			{
-				write(g.pipe_fd[1], g.line_to_get, ft_strlen(g.line_to_get));
-				write(g.pipe_fd[1], "\n", 1); // Añadir salto de línea.
-				free(g.line_to_get);          // Liberamos la memoria correctamente.
-			}
-			else
-			{
-				free(g.line_to_get); // Liberamos incluso si es `eof`.
-				break;
-			}
-		}
-		close(g.pipe_fd[1]); // Cerramos la escritura del pipe.
-		exit(0);           // Terminamos el proceso hijo.
-	}
-	else // Proceso padre.
-	{
-		close(g.pipe_fd[1]); // Cierra la escritura del pipe en el padre.
-		g.line = ft_strdup(""); // Inicializamos `line`.
-		while ((g.bytes_read = read(g.pipe_fd[0], g.buffer, sizeof(g.buffer) - 1)) > 0)
-		{
-			g.buffer[g.bytes_read] = '\0'; // Aseguramos que el buffer sea una cadena válida.
-			g.temp = g.line;
-			g.line = ft_safe_strjoin(g.line, g.buffer); // Usamos una función segura para concatenar.
-			free(g.temp);                           // Liberamos la memoria previa solo si `line` no falla.
-			if (!g.line)
-				return (close(g.pipe_fd[0]), NULL);
-		}
-		close(g.pipe_fd[0]); // Cerramos la lectura del pipe.
-		waitpid(g.pid, &g.status, 0);
-		if (WIFSIGNALED(g.status) && WTERMSIG(g.status) == SIGINT)
-			return (free(g.line), NULL);
+		if (help_father_process(&g) == 1)
+			return (NULL);
 	}
 	return (g.line);
 }

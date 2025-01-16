@@ -74,6 +74,8 @@ typedef struct s_heredoc
 // DIRECTORIES_PIPES FUNCTIONS //
 
 int		get_infile(t_minishell *minishell, int infile_fd, int pipe_index);
+void	help_son_process(t_heredoc *g, char *eof);
+int		help_father_process(t_heredoc *g);
 int		get_outfile(t_minishell *minishell, int outfile_fd, int pipe_index);
 void	pipe_create(t_minishell *minishell, int i);
 void	create_pipes(t_minishell *minishell);

@@ -35,7 +35,7 @@ SRCS_EXECUTE = init_execution.c execute_command.c execute_aux.c
 EXECUTE = $(addprefix $(DIR_EXECUTE), $(SRCS_EXECUTE))
 
 DIR_DIRECTORIES_PIPES = directories_pipes/
-SRCS_DIRECTORIES_PIPES = get_infile.c get_outfile.c get_pipe.c close_fd.c
+SRCS_DIRECTORIES_PIPES = get_infile.c get_infile_aux.c get_outfile.c get_pipe.c close_fd.c
 DIRECTORIES_PIPES = $(addprefix $(DIR_DIRECTORIES_PIPES), $(SRCS_DIRECTORIES_PIPES))
 
 DIR_BUILTIN = builtin/
