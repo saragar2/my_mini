@@ -79,7 +79,7 @@ void	new_minishell_env(t_minishell *minishell, char **argv, int argc)
 		new_str = ft_strjoin(old_str1, combination_of_argv);
 		free(combination_of_argv);
 	}
-	else //------------------------------------esto es necesario?
+	else
 	{
 		free(old_str1);
 		new_str = ft_strdup(argv[1]);
@@ -92,22 +92,17 @@ void	export_builtin(int argc, char **argv, t_minishell *minishell)
 	int		i;
 	char	*env_name;
 
-	// printf("\n\nmira como molo: %d\n-----------------\n", argc);
 	i = 0;
 	if (argc == 1)
 	{
 		while (minishell->env[i])
 		{
-			env_name = get_env_name(minishell->env[i]);
+			env_name = get_env_name(minishell->env[i++]);
 			printf("declare -x %s=\"%s\"\n", env_name,
 				get_env_value(env_name, minishell));
 			free(env_name);
-			i++;
 		}
 	}
-
-	//-----------------------todo esto está mal planteado porque soy tonta y solo sirve para el primer argv
-	
 	else if (check_num(argv[1]) == 0 || ft_strncmp("PS1", argv[1], 3) == 0)
 	{
 		if (has_equal_sign(argv[1]) == 0)
@@ -115,10 +110,8 @@ void	export_builtin(int argc, char **argv, t_minishell *minishell)
 		new_minishell_env(minishell, argv, argc);
 	}
 	else if (check_num(argv[1]) == 1)
-	{
-		ft_putendl_fd("export: not a valid identifier", STDERR_FILENO);
-		return (minishell->exit_status = 1, (void)0);
-	}
+		return (ft_putendl_fd("export: not a valid identifier", 
+		STDERR_FILENO), minishell->exit_status = 1, (void)0);
 	minishell->exit_status = 0;
 	minishell->wait_pid_status = 0;
 }
