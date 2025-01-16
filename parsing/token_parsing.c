@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:24:41 by saragar2          #+#    #+#             */
-/*   Updated: 2025/01/15 19:42:17 by saragar2         ###   ########.fr       */
+/*   Updated: 2025/01/16 20:27:22 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	no_spaces_before_or_after_tokens(t_minishell *minishell, t_token **tokens)
 		{
 			if (check_quotes(list->str))
 				return (no_exit_free(list->str, NOT_CMD, minishell), 1);
-			list->str = ft_strtrim(str_cpy, " \tn");
+			list->str = ft_strtrim(str_cpy, " \t\n");
 			free(str_cpy);
 			list = list->next;
 		}

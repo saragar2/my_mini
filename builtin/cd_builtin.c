@@ -6,7 +6,7 @@
 /*   By: saragar2 <saragar2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:22:41 by saragar2          #+#    #+#             */
-/*   Updated: 2024/11/12 19:51:17 by saragar2         ###   ########.fr       */
+/*   Updated: 2025/01/16 18:02:50 by saragar2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*get_dir(int argc, char **argv, t_minishell *minishell)
 {
 	char	*dir;
 
-	if (argc == 1)
+	if (argc == 1 || (argc == 2 && ft_strncmp(argv[1], "~", 2) == 0))
 		dir = get_env_value("HOME", minishell);
 	else if (ft_strncmp(argv[1], "-", 2) == 0)
 		dir = get_env_value("OLDPWD", minishell);
